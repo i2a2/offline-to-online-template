@@ -1,0 +1,95 @@
+
+### `.gitignore` (orientado a HLS/Vivado/Vitis + Python)
+```gitignore
+# Python
+__pycache__/
+*.pyc
+.venv/
+.env
+.ipynb_checkpoints/
+
+# Build artifacts
+build/
+dist/
+*.o
+*.a
+*.so
+*.out
+
+# Results (keep local)
+experiments/results/
+reports/
+*.log
+
+# Vitis/Vivado/HLS typical outputs
+*.jou
+*.str
+*.rpt
+*.wdb
+*.wcfg
+*.xsa
+*.xclbin
+*.xo
+*.dcp
+*.bit
+*.ltx
+.vitis/
+.vivado/
+xilinx_*/
+*.runs/
+*.cache/
+*.hw/
+*.sim/
+*.ip_user_files/
+
+# Editors
+.vscode/
+.idea/
+
+### `.gitignore` (orientado a HLS/Vivado/Vitis + Python)
+```gitignore
+# Python
+__pycache__/
+*.pyc
+.venv/
+.env
+.ipynb_checkpoints/
+
+# Build artifacts
+build/
+dist/
+*.o
+*.a
+*.so
+*.out
+
+# Results (keep local)
+experiments/results/
+reports/
+*.log
+
+# Vitis/Vivado/HLS typical outputs
+*.jou
+*.str
+*.rpt
+*.wdb
+*.wcfg
+*.xsa
+*.xclbin
+*.xo
+*.dcp
+*.bit
+*.ltx
+.vitis/
+.vivado/
+xilinx_*/
+*.runs/
+*.cache/
+*.hw/
+*.sim/
+*.ip_user_files/
+
+# Editors
+.vscode/
+.idea/
+
