@@ -15,6 +15,7 @@ dist/
 *.a
 *.so
 *.out
+src/common/generated/*
 
 # Results (keep local)
 experiments/results/

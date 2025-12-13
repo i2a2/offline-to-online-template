@@ -136,7 +136,7 @@ Command: trig
   --license      License field
 
 Examples:
-  preprocess trig --name <file_name> --out src/common/generated/<file_name>.h --author <author>
+  preprocess trig --name <file_name> --out src/common/generated/<file_name>.h
 )";
 }
 
