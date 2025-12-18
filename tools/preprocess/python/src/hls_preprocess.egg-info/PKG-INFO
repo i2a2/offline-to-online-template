@@ -1,0 +1,8 @@
+Metadata-Version: 2.4
+Name: hls-preprocess
+Version: 0.1.0
+Summary: Preprocessing utilities to generate HLS-friendly headers (LUTs, constants, etc.)
+Author-email: cgonzalezbrito <c.gonzalezb@upm.es>
+License: MIT
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown

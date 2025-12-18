@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hls-preprocess"
+version = "0.1.0"
+description = "Preprocessing utilities to generate HLS-friendly headers (LUTs, constants, etc.)"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "<author>", email = "<author@email.com>" }]
+
+# No external dependencies for this example.
+dependencies = []
+
+[project.scripts]
+preprocess = "preprocess.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+

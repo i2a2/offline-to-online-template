@@ -1,3 +1,5 @@
+#include "provenance.hpp"
+
 #include <cmath>
 #include <cctype>
 #include <chrono>
@@ -15,11 +17,11 @@ namespace fs = std::filesystem;
 
 struct Meta {
     std::string filename;
-    std::string description = "<>";
-    std::string author = "<>";
+    std::string description = "";
+    std::string author = "";
     std::string version = "1.0";
-    std::string copyright = "<>";
-    std::string license = "<>";
+    std::string copyright = "";
+    std::string license = "";
 };
 
 static std::string today_yyyy_mm_dd() {
@@ -63,32 +65,74 @@ static std::string make_include_guard(const std::string& stem) {
     return out;
 }
 
+// Insert here the code generation functions
+// ...
+
 static std::string render_header(
     const std::string& name,
+    const Provenance& prov,
     const Meta& meta
+    //,
+    // ... additional parameters ...
+    // ...
 ) {
     const std::string guard = make_include_guard(name);
     const std::string date = today_yyyy_mm_dd();
 
     std::ostringstream oss;
-    oss << "/******************************************************************************\n"
-        << " * Filename    : " << meta.filename << "\n"
-        << " * Description : " << meta.description << "\n"
-        << " * Author      : " << meta.author << "\n"
-        << " * Date        : " << date << "\n"
-        << " * Version     : " << meta.version << "\n"
+
+    // Provenance / traceability info
+    oss << "/*\n"
+        << " * @section PROVENANCE\n"
         << " *\n"
-        << " * Copyright   : " << meta.copyright << "\n"
-        << " * License     : " << meta.license << "\n"
-        << " ******************************************************************************/\n\n";
+        << " * Generator ID: " << prov.generator_id << "\n"
+        << " * Source: " << prov.source << "\n"
+        << " * Git commit: " << prov.git_sha << "\n"
+        << " * Build Time (ISO 8601): " << prov.build_time_iso << "\n";
+
+    if (prov.config_path) {
+        oss << " * Config path   : " << *prov.config_path << "\n";
+    }
+    if (prov.config_sha256) {
+        oss << " * Config SHA256 : " << *prov.config_sha256 << "\n";
+    }
+    if (!prov.params.empty()) {
+        oss << " * Parameters:\n";
+        for (const auto& [k, v] : prov.params) {
+            oss << " *   - " << k << " = " << v << "\n";
+        }
+    }
+    if (!prov.inputs.empty()) {
+        oss << " * Inputs:\n";
+	    for (const auto& [k, v] : prov.inputs) {
+            oss << " *   - " << k << " = " << v << "\n";
+        }
+    }
+    oss << " */\n\n";
+
+    oss << "/*\n"
+        << " * @file      " << meta.filename << "\n"
+        << " * @brief     " << meta.description << "\n"
+        << " * @author    " << meta.author << "\n"
+        << " * @date      " << date << "\n"
+        << " * @version   " << meta.version << "\n"
+        << " *\n"
+        << " * @copyright " << meta.copyright << "\n"
+        << " * @license   " << meta.license << "\n"
+        << " */\n\n";
 
     oss << "#ifndef " << guard << "\n"
         << "#define " << guard << "\n\n";
 
-    // Includes
+    // Insert here Includes
     //oss << "#include <hls_stream.h>\n"
     //    << "#include <hls_vector.h>\n"
     //    << "#include <hls_math.h>\n\n";
+    
+    // Insert here call to code generation functions
+    // ...
+
+    oss << "\n#endif // " << guard << "\n";
 
     return oss.str();
 }
@@ -124,7 +168,7 @@ static void atomic_write_text(const fs::path& out_path, const std::string& conte
 static void print_usage() {
     std::cerr <<
 R"(Usage:
-  preprocess trig --name <stem> --out <path> [options]
+  preprocess --name <stem> --out <path> [options]
 
 Command: trig
   --name         Base name for include guard (e.g., trig_tables)
@@ -136,7 +180,7 @@ Command: trig
   --license      License field
 
 Examples:
-  preprocess trig --name <file_name> --out src/common/generated/<file_name>.h
+  preprocess --name <file_name> --out src/common/generated/<file_name>.h
 )";
 }
 
@@ -148,12 +192,6 @@ static std::string get_arg_value(int& i, int argc, char** argv) {
 int main(int argc, char** argv) {
     try {
         if (argc < 2) {
-            print_usage();
-            return 2;
-        }
-
-        const std::string cmd = argv[1];
-        if (cmd != "trig") {
             print_usage();
             return 2;
         }
@@ -172,6 +210,8 @@ int main(int argc, char** argv) {
             else if (a == "--version") meta.version = get_arg_value(i, argc, argv);
             else if (a == "--copyright") meta.copyright = get_arg_value(i, argc, argv);
             else if (a == "--license") meta.license = get_arg_value(i, argc, argv);
+            // Insert here additional argument parsing
+            // ...
             else if (a == "-h" || a == "--help") { print_usage(); return 0; }
             else throw std::runtime_error("Unknown argument: " + a);
         }
@@ -181,7 +221,21 @@ int main(int argc, char** argv) {
 
         meta.filename = out.filename().string();
 
-        std::string hdr = render_header(name, meta);
+        Provenance prov;
+        prov.generator_id = "preprocess_cpp_1.0";
+        prov.source = fs::absolute(fs::path(argv[0])).string();
+        prov.git_sha = get_git_sha(".");
+        prov.build_time_iso = now_iso8601_utc();
+
+        // Insert here additional provenance parameters
+        // ...
+
+        std::string hdr = render_header(
+                name,
+                prov,
+                meta
+                // ... additional parameters ...
+        );
 
         atomic_write_text(out, hdr);
 
