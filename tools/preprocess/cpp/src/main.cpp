@@ -170,9 +170,9 @@ static void print_usage() {
 R"(Usage:
   preprocess --name <stem> --out <path> [options]
 
-Command: trig
-  --name         Base name for include guard (e.g., trig_tables)
-  --out          Output header path (e.g., src/common/generated/trig_tables.h)
+Command:
+  --name         Base name for include guard (e.g., pulsefit)
+  --out          Output header path (e.g., src/common/generated/pulsefit.h)
   --description  Header description
   --author       Author field
   --version      Version field (default: 1.0)
@@ -200,7 +200,7 @@ int main(int argc, char** argv) {
         fs::path out;
         Meta meta;
 
-        for (int i = 2; i < argc; ++i) {
+        for (int i = 1; i < argc; ++i) {
             std::string a = argv[i];
 
             if (a == "--name") name = get_arg_value(i, argc, argv);
