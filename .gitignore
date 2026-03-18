@@ -1,5 +1,5 @@
 
-### `.gitignore` (orientado a HLS/Vivado/Vitis + Python)
+### `.gitignore`
 ```gitignore
 # Python
 __pycache__/

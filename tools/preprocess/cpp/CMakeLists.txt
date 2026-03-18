@@ -8,6 +8,11 @@ add_executable(
 	preprocess
 	src/main.cpp
 	src/provenance.cpp
+    # Add more source files as needed
+)
+
+target_include_directories(preprocess PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/third_party
 )
 
 # Warnings 

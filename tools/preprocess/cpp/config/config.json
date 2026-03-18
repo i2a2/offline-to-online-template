@@ -1,0 +1,23 @@
+{
+    "_comment": "Configuration file for your project. This file is used to specify the parameters for code generation.",
+  "output_dir": "../../../../src/artifacts",
+
+  "meta": {
+    "author": "author",
+    "version": "1.0",
+    "license": "MIT",
+    "copyright": ""
+  },
+
+  "headers": [
+    {
+      "file": "file_name.h",
+      "description": "Describe the purpose of this header file.",
+      "constants": {
+        "WINDOW_LENGTH": 80, "ETC": 40, "SOME_PARAM": 100
+      },
+      "emit": ["function_0", "function_1"]
+    }
+  ]
+}
+
