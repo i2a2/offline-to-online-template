@@ -7,9 +7,13 @@ This repository contains the reproducibility assets, reference implementations, 
 > **Institution:** UPM / I2A2  
 > **Year:** 2026
 
+## Integration Document
+
+`docs/integration_document.md` provides a template instantiation of the integration document defined in the methodology. It is structured around the ten workflow steps, and covers for each step the required inputs, controlled outputs, and acceptance gate. It is intended to be versioned alongside the implementation artifacts and updated progressively as the migration proceeds.
+
 ## Preprocess tools
 
-This directory contains preprocessing utilities used to generate HLS-friendly headers (e.g., LUTs and constants) from configurable inputs.
+`tools/preprocess` contains preprocessing utilities used to generate HLS-friendly headers (e.g., LUTs and constants) from configurable inputs.
 
 Two equivalent implementations are provided:
 
